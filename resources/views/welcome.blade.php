@@ -1,0 +1,10 @@
+<x-layout>
+    <x-navigation/>
+    <x-main-card>
+        @auth
+            <x-appform/>
+        @else
+            <x-loginform/>
+        @endauth
+    </x-main-card>
+</x-layout>
