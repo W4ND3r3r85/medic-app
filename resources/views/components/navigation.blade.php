@@ -35,7 +35,7 @@
                         @auth
                             <a href="/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Schedule</a>
                             <a href="/user-appointments" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">My Appointments</a>
-                            @if(auth()->user()->username === 'arpi')
+                            @if(auth()->user()->is_admin === 1)
                                 <a href="/appointments" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Appointments</a>
                             @endif
                         @endauth

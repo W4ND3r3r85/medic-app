@@ -10,15 +10,16 @@ use App\Models\User;
 
 class AppointmentsController extends Controller
 {
-    public function store(){
-       $x = request()->validate([
-            'appointment_date' => ['required','date','after:tomorrow']
+    public function store()
+    {
+        $x = request()->validate([
+            'appointment_date' => ['required', 'date', 'after:tomorrow']
         ]);
 
-    Appointment::create([
-        'user_id' => auth()->user()->id,
-        'appointment_date' => request('appointment_date'),
-    ]);
+        Appointment::create([
+            'user_id' => auth()->user()->id,
+            'appointment_date' => request('appointment_date'),
+        ]);
         return redirect('user-appointments')->with('success', 'Your appointment has been submitted for approval.');
     }
 
@@ -37,22 +38,25 @@ class AppointmentsController extends Controller
     public function delete()
     {
         Appointment::where('appointment_date', '=', request('appointment_date'))->delete();
-        return redirect('/')->with('success','Your appointment has been deleted, please choose another more suitable time for you.');
+        return redirect('/')->with('success', 'Your appointment has been deleted, please choose another more suitable time for you.');
     }
 
     public function update(Request $request, Appointment $appointment)
     {
         $request->validate([
             'status' => ['string'],
-            'message' => ['exclude_if:status,approved', 'string', 'required']
+            'message' => ['exclude_if:status,approved','exclude_if:status,rescheduled', 'string', 'required']
         ]);
         $appointment->update(['status' => $request->status]);
-        if($request->status == 'rejected') {
+        if ($request->status == 'rejected') {
             Message::create([
                 'appointment_id' => $appointment->id,
-                'message' => $request->message,
+                'value' => $request->message,
                 'type' => 'reject'
             ]);
+        }
+        if ($request->status == 're-scheduled') {
+            return redirect('/')->with('success','You can reschedule your appointment now if you want');
         }
         return redirect('appointments')->with('success', __('messages.appointment.' . $request->status));
     }

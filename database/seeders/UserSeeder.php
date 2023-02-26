@@ -15,19 +15,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'username' => 'Test user',
-            'name' => 'Test Elek',
-            'email' => 'telek@email.com',
-            'phone' => '0742666777',
-            'password' => bcrypt('teszt1234'),
-        ]);
+//        User::create([
+//            'username' => 'Test user',
+//            'name' => 'Test Elek',
+//            'email' => 'telek@email.com',
+//            'phone' => '0742666777',
+//            'password' => bcrypt('teszt1234'),
+//        ]);
         User::create([
             'username' => 'arpi',
             'name' => 'Szekely Arpad',
             'email' => 'arpi@webgurus.io',
             'phone' => '0742666722',
             'password' => bcrypt('pass1234'),
+            'is_admin' => 'true',
         ]);
 
     }

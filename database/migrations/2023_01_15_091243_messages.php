@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('appointment_id');
-            $table->text('message');
+            $table->text('value');
             $table->text('type');
             $table->timestamps();
             $table->foreign('appointment_id')->references('id')->on('appointments')->cascadeOnDelete();
